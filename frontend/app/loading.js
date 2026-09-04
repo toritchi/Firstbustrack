@@ -1,0 +1,1 @@
+export default function Loading(){return <main className="container"><div className="card"><span className="eyebrow">Algeria Bus</span><h1>Loading…</h1><p className="muted">Connecting to the transport service.</p></div></main>}

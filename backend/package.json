@@ -1,0 +1,31 @@
+{
+  "name": "algeria-bus-platform-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "migrate": "node src/database/migrate.js",
+    "test": "node --test",
+    "e2e": "node scripts/e2e.mjs",
+    "seed:test": "node scripts/seed-test.mjs",
+    "e2e:full": "node scripts/e2e-full.mjs",
+    "test:all": "npm test && npm run e2e:full",
+    "test:reset": "node scripts/reset-test.mjs",
+    "test:contract": "node scripts/validate-openapi.mjs",
+    "test:frontend-contract": "node scripts/frontend-contract.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^16.6.1",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.16.3",
+    "zod": "^4.1.5",
+    "mqtt": "^5.14.0",
+    "redis": "^5.8.2",
+    "ws": "^8.18.3"
+  }
+}

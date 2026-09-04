@@ -1,0 +1,3 @@
+'use client';
+import {useEffect,useState} from 'react';import{api}from '../../lib/api';
+export default function Routes(){const[routes,setRoutes]=useState([]),[err,setErr]=useState('');useEffect(()=>{api('/api/v1/public/routes').then(setRoutes).catch(e=>setErr(e.message))},[]);return <main className="container"><h1>Routes</h1>{err&&<p className="error">{err}</p>}<div className="grid">{routes.map(r=><a className="card" href={`/routes/${r.id}`} key={r.id}><b>Line {r.lineNumber}</b><h3>{r.name}</h3><div className="list">{(r.directions||[]).map(d=><span className="badge" key={d.id}>{d.origin} → {d.destination}</span>)}</div></a>)}</div></main>}

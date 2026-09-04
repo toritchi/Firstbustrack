@@ -1,0 +1,16 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const source=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
+const spec=JSON.parse(fs.readFileSync(new URL('../docs/openapi.json',import.meta.url),'utf8'));
+const re=/app\.(get|post|patch|delete)\(['"]([^'"]+)/g;
+const actual=[]; let m;
+while((m=re.exec(source))) actual.push(`${m[1].toUpperCase()} ${m[2]}`);
+const documented=[];
+for(const [path,item] of Object.entries(spec.paths)) for(const method of Object.keys(item)) documented.push(`${method.toUpperCase()} ${path.replace(/\{([^}]+)\}/g,':$1')}`);
+const A=new Set(actual), D=new Set(documented);
+const missing=actual.filter(x=>!D.has(x));
+const extra=documented.filter(x=>!A.has(x));
+assert.equal(missing.length,0,`Undocumented Express routes: ${missing.join(', ')}`);
+assert.equal(extra.length,0,`OpenAPI routes not in Express: ${extra.join(', ')}`);
+assert.equal(spec.openapi,'3.0.3');
+console.log(`OpenAPI contract PASS: ${actual.length} Express routes documented.`);
